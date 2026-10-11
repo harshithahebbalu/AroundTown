@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f5ef" />
+    <meta name="description" content="Find Portland events that fit your interests, make a plan, and add it to your calendar." />
+    <title>AroundTown — find your kind of Portland</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#discover" aria-label="AroundTown home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M16 3.5 23.5 8v8.7L16 28.5 8.5 16.7V8L16 3.5Z"/><path d="m16 9 2.1 6.2L16 23l-2.1-7.8L16 9Z"/><circle cx="16" cy="16" r="1.6"/></svg></span>
+        <span>Around<span class="brand-light">Town</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-view="discover">Discover</button>
+        <button class="nav-link" data-view="plans">My plans <span class="plan-count" id="nav-plan-count">0</span></button>
+      </nav>
+      <button class="location-pill" id="location-button" aria-label="Current location Portland, Oregon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        Portland, OR <span class="chevron">⌄</span>
+      </button>
+    </header>
+
+    <main>
+      <section id="discover-view" class="view">
+        <section class="hero">
+          <div class="hero-copy">
+            <div class="eyebrow"><span class="eyebrow-dot"></span> YOUR CITY, YOUR KIND OF DAY</div>
+            <h1>Make room for<br /><em>a little wonder.</em></h1>
+            <p>Find good stuff happening around Portland any day of the week, then turn a maybe into a plan.</p>
+            <div class="hero-meta"><span class="demo-tag">DEMO LISTINGS</span><span>Sample events for your course project</span></div>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="sun"></div><div class="hill hill-back"></div><div class="hill hill-front"></div>
+            <div class="bridge"><span></span><span></span><span></span><span></span><i></i></div>
+            <div class="hero-stamp"><span>MAKE</span><b>EVERYDAY</b><span>YOURS ✳</span></div>
+            <div class="hero-note">PORTLAND<br /><span>45°31′ N · 122°40′ W</span></div>
+          </div>
+        </section>
+
+        <section class="discovery-wrap" aria-label="Browse local events">
+          <div class="section-heading">
+            <div><p class="kicker">A GOOD PLACE TO START</p><h2>Find your next <span>favorite.</span></h2></div>
+            <button class="text-button" id="reset-filters">Clear filters <span aria-hidden="true">↗</span></button>
+          </div>
+          <div class="filter-panel">
+            <label class="search-box" for="search-input"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><input id="search-input" type="search" placeholder="Try “food”, “jazz”, or a neighborhood" autocomplete="off" /><kbd>⌘ K</kbd></label>
+            <div class="filter-divider"></div>
+            <label class="date-select-label" for="date-filter"><span class="calendar-icon" aria-hidden="true">▦</span><span id="date-filter-label" aria-hidden="true"></span><input type="date" id="date-filter" aria-label="Filter by day" /><span class="select-caret" aria-hidden="true">⌄</span></label>
+          </div>
+          <div class="category-row" id="category-filters" aria-label="Filter by interest">
+            <button class="category-chip selected" data-category="All"><span class="chip-icon">✳</span> All ideas</button>
+            <button class="category-chip" data-category="Food"><span class="chip-icon">♧</span> Food & drink</button>
+            <button class="category-chip" data-category="Markets"><span class="chip-icon">▤</span> Markets</button>
+            <button class="category-chip" data-category="Music"><span class="chip-icon">♫</span> Music</button>
+            <button class="category-chip" data-category="Art"><span class="chip-icon">✿</span> Art & culture</button>
+            <button class="category-chip" data-category="Outdoors"><span class="chip-icon">☼</span> Hikes & outdoors</button>
+            <button class="category-chip family-filter" id="kids-filter" aria-pressed="false"><span class="chip-icon">♡</span> Kids friendly</button>
+          </div>
+
+          <div class="results-header"><div><h3 id="results-title">Today, around Portland</h3><p id="results-subtitle">Local events, trail ideas, and little adventures to choose from</p></div><span id="results-count" class="results-count"></span></div>
+          <div id="event-grid" class="event-grid" aria-live="polite"></div>
+          <div id="no-results" class="empty-state hidden"><span>⌕</span><h3>No matches just yet</h3><p>Try another interest or clear your search.</p><button class="button button-dark" id="empty-reset">Show me everything</button></div>
+          <p class="demo-disclaimer">These are sample listings for the AroundTown demo. Dates, details, and venues are illustrative.</p>
+        </section>
+      </section>
+
+      <section id="plans-view" class="view hidden">
+        <div class="plans-heading">
+          <div><p class="kicker">YOUR LITTLE ADVENTURE</p><h1>My <em>plans.</em></h1><p class="plans-intro">Good ideas deserve a spot on the calendar.</p></div>
+          <div class="plan-heading-mark" aria-hidden="true">✳</div>
+        </div>
+        <div id="plan-content"></div>
+      </section>
+    </main>
+
+    <footer class="footer"><span>AROUNDTOWN <i>✳</i> PORTLAND, OREGON</span><span>Make a day of it.</span></footer>
+
+    <dialog id="event-dialog" class="event-dialog" aria-labelledby="dialog-title">
+      <button class="dialog-close" id="dialog-close" aria-label="Close event details">×</button>
+      <div id="dialog-content"></div>
+    </dialog>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
